@@ -1,6 +1,5 @@
 {
-   "alias_info" : {},
-   "app_key" : "system.generated.vr_gait.exe",
+   
    "bindings" : {
       "/actions/buggy" : {
          "sources" : [
@@ -253,7 +252,5 @@
    },
    "controller_type" : "vive_controller",
    "description" : "",
-   "name" : "vive_controller",
-   "options" : {},
-   "simulated_actions" : []
+   "name" : "vive_controller"
 }
