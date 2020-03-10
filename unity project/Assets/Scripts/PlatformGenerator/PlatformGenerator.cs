@@ -10,7 +10,6 @@ namespace VRGait.Platforms
 		private int[] _triangles;
 
 		private Vector2[] _uvs;
-
 		public PlatformGenerator()
 		{
 			// Initialize some related arries.
@@ -19,14 +18,17 @@ namespace VRGait.Platforms
 			_uvs = new Vector2[4];
 		}
 
-		// The order for points is counterClockwise: Bottom Left -> Bottom Right -> Top Right -> Top Left
-		public GameObject GeneratePlatform(Vector3 pBottomLeft, Vector3 pBottomRight, Vector3 pTopRight, Vector3 pTopLeft, Material platformMaterial, Transform parent = null)
+
+
+        // The order for points is counterClockwise: Bottom Left -> Bottom Right -> Top Right -> Top Left
+        public GameObject GeneratePlatform(Vector3 pBottomLeft, Vector3 pBottomRight, Vector3 pTopRight, Vector3 pTopLeft, Material platformMaterial, Transform parent = null)
 		{
+            
 			// Create a new Go and mark it as DontDestroyOnload
 			var go = new GameObject("Platform", typeof(MeshFilter), typeof(MeshRenderer));
 			Object.DontDestroyOnLoad(go);
 			// Move the go to the right high place.
-			go.transform.position = new Vector3(go.transform.position.x, pBottomLeft.y, go.transform.position.z);
+			go.transform.position = new Vector3(go.transform.position.x, 0.042f, go.transform.position.z);
 			// Let the go becomes the child of elevator
 			if (parent != null)
 			{

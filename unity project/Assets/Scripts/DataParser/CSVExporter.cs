@@ -7,7 +7,7 @@ namespace VRGait.Data
 {
 	public class CSVExporter
 	{
-		public static bool Write(Vector3[] cornerPositions, uint num_subject, uint num_trial, string str_elevation, string str_type, List<FrameData> datas, List<GameObject> trackObjects)
+		public static bool Write(Vector3[] cornerPositions, string num_subject, string num_trial, string str_elevation, string str_type, List<FrameData> datas, List<GameObject> trackObjects, int MyThoughtsAre, int MyBodyFeels, int IAmFeeling, int MentalEffort, string extraInfo)
 		{
 			string dirPath = Application.persistentDataPath + "/Exports";
 			if (!Directory.Exists(dirPath))
@@ -15,29 +15,28 @@ namespace VRGait.Data
 				Directory.CreateDirectory(dirPath);
 			}
 
-			string filePath = dirPath + string.Format("/SUB_{0}_{1}_{2}_{3}_({4}).csv", num_subject, num_trial, str_elevation, str_type, DateTime.Now.ToString("dd-MM-yy HH-mm-ss"));
-			using (FileStream fs = File.Create(filePath))
-			{
-			}
+			string filePath = dirPath + string.Format("/{5}_SUB_{0}_{1}_{2}_{3}_({4}).csv", num_subject, num_trial, str_elevation, str_type, DateTime.Now.ToString("dd-MM-yy HH-mm-ss"), extraInfo);
+			FileStream fs = File.Create(filePath);
 
 			// Write infomation into the .csv file
-			using (StreamWriter sw = new StreamWriter(filePath))
+			using (StreamWriter sw = new StreamWriter(fs, Encoding.ASCII))
 			{
 				// Write the fix data title in
-				sw.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}",
+				sw.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}",
 					"Subject Number", "Trial Number", "Trial Type", "Elevation",
 					"Corner(Bottom Left) Position X", "Corner(Bottom Left) Positio Y", "Corner(Bottom Left) Position Z",
 					"Corner(Bottom Right) Position X", "Corner(Bottom Right) Positio Y", "Corner(Bottom Right) Position Z",
 					"Corner(Top Right) Position X", "Corner(Top Right) Positio Y", "Corner(Top Right) Position Z",
-					"Corner(Top Left) Position X", "Corner(Top Left) Positio Y", "Corner(Top Left) Position Z"
+					"Corner(Top Left) Position X", "Corner(Top Left) Positio Y", "Corner(Top Left) Position Z","My thoughts are","My body feels","I am feeling","Mental effort"
 				));
 				// Write the title line in.
-				sw.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}",
+				sw.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}",
 							num_subject, num_trial, str_type, str_elevation,
 							cornerPositions[0].x.ToString("f3"), cornerPositions[0].y.ToString("f3"), cornerPositions[0].z.ToString("f3"),
 							cornerPositions[1].x.ToString("f3"), cornerPositions[1].y.ToString("f3"), cornerPositions[1].z.ToString("f3"),
 							cornerPositions[2].x.ToString("f3"), cornerPositions[2].y.ToString("f3"), cornerPositions[2].z.ToString("f3"),
-							cornerPositions[3].x.ToString("f3"), cornerPositions[3].y.ToString("f3"), cornerPositions[3].z.ToString("f3")
+							cornerPositions[3].x.ToString("f3"), cornerPositions[3].y.ToString("f3"), cornerPositions[3].z.ToString("f3"),
+                            MyThoughtsAre,MyBodyFeels,IAmFeeling,MentalEffort
 				));
 				// Write the title in.
 				StringBuilder sb = new StringBuilder();

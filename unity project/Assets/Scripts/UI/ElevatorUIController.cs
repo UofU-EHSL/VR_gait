@@ -43,7 +43,11 @@ namespace VRGait.Elevator
 				Debug.LogError("Please input a valid elevator time");
 				return;
 			}
-
+			if (time == 0)
+			{
+				Debug.LogError("The elevator time cannot be zero");
+				return;
+			}
 
 			this.elevatorController.MoveUp(height, time);
 		}
@@ -57,7 +61,11 @@ namespace VRGait.Elevator
 				Debug.LogError("Please input a valid elevator time");
 				return;
 			}
-
+			if (time == 0)
+			{
+				Debug.LogError("The elevator time cannot be zero");
+				return;
+			}
 			this.elevatorController.MoveDown(time);
 		}
 	}

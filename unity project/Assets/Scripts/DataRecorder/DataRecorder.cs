@@ -27,7 +27,14 @@ namespace VRGait.Data
 
 	public class DataRecorder : MonoBehaviour
 	{
-		public List<GameObject> trackGameObjects;
+
+        public int MyThoughtsAre;
+        public int MyBodyFeels;
+        public int IAmFeeling;
+        public int MentalEffort;
+        private string extra_info;
+
+        public List<GameObject> trackGameObjects;
 
 		public List<FrameData> frameDatas { get; set; }
 
@@ -45,13 +52,30 @@ namespace VRGait.Data
 
 		private List<Transform> _cachedTrackTransforms;
 
-		private void Awake()
+        public void MyThoughts(int value)
+        {
+            MyThoughtsAre = value;
+        }
+        public void MyBody(int value)
+        {
+            MyBodyFeels = value;
+        }
+        public void ImFeeling(int value)
+        {
+            IAmFeeling = value;
+        }
+        public void Mental(int value)
+        {
+            MentalEffort = value;
+        }
+        private void Awake()
 		{
 			if (this.researchUIController == null)
 			{
 				throw new Exception("Please asign the research UI Controller.");
 			}
 			this.cornerPositions = new Vector3[4];
+            
 		}
 
 		private void Start()
@@ -66,28 +90,41 @@ namespace VRGait.Data
 			}
 		}
 
-		public void TriggerRecording()
-		{
-			if (_active)
-			{
-				this.Deactivate();
-				this.researchUIController.txt_recordingButton.text = "Start Recording";
-				this.researchUIController.ToggleRecordingText();
-			}
-			else
-			{
-				if (!this.researchUIController.CheckInputValid())
-				{
-					Debug.LogError("Please check that if all input are valid or not.");
-					return;
-				}
-				this.Activate();
-				this.researchUIController.txt_recordingButton.text = "Stop Recording";
-				this.researchUIController.ToggleRecordingText();
-			}
-		}
+        public void TriggerRecording()
+        {
+            extra_info = "";
+            if (_active)
+            {
+                this.Deactivate();
+                this.researchUIController.txt_recordingButton.text = "Start Recording";
+                this.researchUIController.ToggleRecordingText();
+            }
+            else
+            {
+                this.Activate();
+                this.researchUIController.txt_recordingButton.text = "Stop Recording";
+                this.researchUIController.ToggleRecordingText();
+            }
+        }
+        public void TriggerEnd()
+        {
+            if (_active)
+            {
+                this.Deactivate();
+                this.researchUIController.txt_recordingButton.text = "Start Recording";
+                this.researchUIController.txt_inRecordingPrompt.gameObject.SetActive(false);
+            }
+        }
+        public void TriggerStart(string type)
+        {
+                extra_info = type;
 
-		public void Activate()
+                this.Activate();
+                this.researchUIController.txt_recordingButton.text = "Stop Recording";
+                this.researchUIController.txt_inRecordingPrompt.gameObject.SetActive(true);
+        }
+
+        public void Activate()
 		{
 			if (_active)
 			{
@@ -113,8 +150,13 @@ namespace VRGait.Data
 				this.researchUIController.elevation,
 				this.researchUIController.trialType,
 				this.frameDatas,
-				this.trackGameObjects
-				))
+				this.trackGameObjects,
+                this.MyThoughtsAre,
+                this.MyBodyFeels,
+                this.IAmFeeling,
+                this.MentalEffort,
+                this.extra_info
+                ))
 			{
 				throw new System.Exception("There is something wrong with the csv exporter.");
 			}

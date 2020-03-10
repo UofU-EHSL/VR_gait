@@ -10,7 +10,8 @@ namespace VRGait.FootTracker
 	{
 
 		public GameObject foot;
-
+        public Material green;
+        public Material red;
         public GameObject tempFoot;
         public GameObject dataRecorder;
         public int recorder_index;
@@ -18,6 +19,7 @@ namespace VRGait.FootTracker
         public Vector3 init_location;
         private bool set = false;
         public GameObject child_foot;
+        public GameObject[] allPossibleTrackers;
         public void Start()
         {
             init_location = gameObject.transform.localPosition;
@@ -35,12 +37,12 @@ namespace VRGait.FootTracker
             if (other.GetComponent<SteamVR_TrackedObject>())
             {
                 tempFoot = other.gameObject;
-                tempFoot.GetComponent<MeshRenderer>().enabled = true;
+                tempFoot.GetComponent<MeshRenderer>().material = green;
             }
         }
         private void OnTriggerExit(Collider other)
         {
-            tempFoot.GetComponent<MeshRenderer>().enabled = false;
+            tempFoot.GetComponent<MeshRenderer>().material = red;
         }
         public void setFeet()
         {
@@ -49,6 +51,10 @@ namespace VRGait.FootTracker
             foot.transform.SetParent(tempFoot.transform);
             tempFoot.name = gameObject.name;
             tempFoot.GetComponent<MeshRenderer>().enabled = false;
+            foreach (GameObject tracker in allPossibleTrackers)
+            {
+                tracker.GetComponent<MeshRenderer>().enabled = false;
+            }
             //dataRecorder.GetComponent<VRGait.Data.DataRecorder>().trackGameObjects[recorder_index] = tempFoot;
         }
 	}

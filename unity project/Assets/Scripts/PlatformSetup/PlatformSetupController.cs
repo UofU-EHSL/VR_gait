@@ -37,7 +37,11 @@ namespace VRGait.Platforms
 
 		public Vector3 topRight { get; private set; }
 
-		public Corner corner { get; private set; }
+        private float width;
+        private float height;
+        public Vector3 TopMidPoints;
+        public GameObject extraUI;
+        public Corner corner { get; private set; }
 
 		public Material platformMaterial;
 
@@ -49,7 +53,7 @@ namespace VRGait.Platforms
 
 		private bool _finishPickingUp = false;
 
-		private List<GameObject> _corners = new List<GameObject>();
+		public List<GameObject> _corners = new List<GameObject>();
 
 		private GameObject _cachedGo;
 
@@ -80,7 +84,13 @@ namespace VRGait.Platforms
 			}
 		}
 
-		private void Update()
+        public Vector3 LerpByDistance(Vector3 A, Vector3 B)
+        {
+            Vector3 P = new Vector3(A.x+(Vector3.Distance(A,B)/2),0,A.z);
+            return P;
+        }
+
+        private void Update()
 		{
 			// Detect the controller's input
 			// Press the trigger to pick up the corner.
@@ -92,6 +102,7 @@ namespace VRGait.Platforms
 			{
 				this.PickupCorner(this.rightController.position);
 			}
+
 		}
 
 		private void PickupCorner(Vector3 cornerPosition)
@@ -158,7 +169,9 @@ namespace VRGait.Platforms
 
 		public void CreatePlatform()
 		{
-			if (_platformGenerator != null)
+            TopMidPoints = LerpByDistance(topLeft, topRight);
+            extraUI.transform.position = TopMidPoints;
+            if (_platformGenerator != null)
 			{
 				_cachedGo = _platformGenerator.GeneratePlatform(this.bottomLeft, this.bottomRight, this.topRight, this.topLeft, this.platformMaterial, this.elevator);
 
@@ -168,8 +181,12 @@ namespace VRGait.Platforms
 				this.dataRecorder.cornerPositions[2] = topRight;
 				this.dataRecorder.cornerPositions[3] = topLeft;
 			}
-		}
 
+            width = Vector3.Distance(bottomLeft, bottomRight);
+            height = Vector3.Distance(bottomLeft, topLeft);
+            this.platformMaterial.mainTextureScale = new Vector2(width,height);
+		}
+        
 		public void RemoveCornerPlaceholders()
 		{
 			for (int i = 0; i < _corners.Count; i++)

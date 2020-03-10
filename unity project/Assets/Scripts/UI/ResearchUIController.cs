@@ -6,12 +6,12 @@ namespace VRGait.Research
 {
 	public class ResearchUIController : MonoBehaviour
 	{
-		public uint subjectNum
+		public string subjectNum
 		{
 			get
 			{
-				uint num;
-				bool isNumeric = uint.TryParse(this.input_subjectNum.text, out num);
+				string num = this.input_subjectNum.text;
+                bool isNumeric = true;
 				if (!isNumeric)
 				{
 					this.input_subjectNum.text = "";
@@ -24,21 +24,11 @@ namespace VRGait.Research
 			}
 		}
 
-		public uint trialNum
+		public string trialNum
 		{
 			get
 			{
-				uint num;
-				bool isNumeric = uint.TryParse(this.input_trailNum.text, out num);
-				if (!isNumeric)
-				{
-					this.input_trailNum.text = "";
-					throw new System.Exception("The trial number input should be a number.");
-				}
-				else
-				{
-					return num;
-				}
+			    return this.input_trailNum.text;
 			}
 		}
 
@@ -64,9 +54,9 @@ namespace VRGait.Research
 
 		public InputField input_trailNum;
 
-		public TextMeshProUGUI dropDown_elevation;
+		public InputField dropDown_elevation;
 
-		public TextMeshProUGUI dropDown_type;
+		public InputField dropDown_type;
 
 		public TextMeshProUGUI txt_inRecordingPrompt;
 
@@ -83,16 +73,18 @@ namespace VRGait.Research
 
 		public void ResetUI()
 		{
-			this.input_subjectNum.text = "";
-			this.input_trailNum.text = "";
+			//this.input_subjectNum.text = "";
+			//this.input_trailNum.text = "";
 		}
 
 		public bool CheckInputValid()
 		{
-			uint num;
-			bool isNumeric_subjectNum = uint.TryParse(this.input_subjectNum.text, out num);
-			bool isNumeric_trialNum = uint.TryParse(this.input_trailNum.text, out num);
-			return isNumeric_subjectNum && isNumeric_trialNum;
+            //uint num;
+            //bool isNumeric_subjectNum = uint.TryParse(this.input_subjectNum.text, out num);
+            //bool isNumeric_trialNum = uint.TryParse(this.input_trailNum.text, out num);
+            bool isNumeric_subjectNum = true;
+            bool isNumeric_trialNum = true;
+            return isNumeric_subjectNum && isNumeric_trialNum;
 		}
 
 		public void ToggleRecordingText()
