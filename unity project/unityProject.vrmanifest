@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.vr_gait.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Ben\\Documents\\VR_gait\\unity project\\actions.json",
+      "action_manifest_path": "C:\\Users\\Ben\\Downloads\\VR_Gait_phase1\\VR_Gait_phase1\\VR_Gait\\actions.json",
       "strings": {
         "en_us": {
           "name": "VR_Gait [Testing]"

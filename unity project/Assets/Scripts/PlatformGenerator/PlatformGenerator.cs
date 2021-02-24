@@ -18,8 +18,6 @@ namespace VRGait.Platforms
 			_uvs = new Vector2[4];
 		}
 
-
-
         // The order for points is counterClockwise: Bottom Left -> Bottom Right -> Top Right -> Top Left
         public GameObject GeneratePlatform(Vector3 pBottomLeft, Vector3 pBottomRight, Vector3 pTopRight, Vector3 pTopLeft, Material platformMaterial, Transform parent = null)
 		{

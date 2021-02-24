@@ -36,7 +36,15 @@ namespace VRGait.Elevator
 			_startMoving = true;
 		}
 
-		public void MoveDown(float time)
+        public void generateCircle(GameObject mesh, Vector3 center, Vector3 rad1, Vector3 rad2)
+        {
+            mesh.transform.position = center;
+            float distance = Vector3.Distance(center, rad1);
+            mesh.transform.localScale = new Vector3(distance, 1, distance);
+
+        }
+
+        public void MoveDown(float time)
 		{
 			if (_startMoving)
 			{
